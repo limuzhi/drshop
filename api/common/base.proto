@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+package common;
+
+option go_package = "drpshop/api/common;common";
+
+message NullReq{}
+message NullRes{}
+
+message PageReq {
+    int64 pageNum = 1; //当前页码
+    int64 pageSize = 2;  //每页数
+    int64 beginTime = 3; //开始时间
+    int64 endTime = 4;  //结束时间
+}
+

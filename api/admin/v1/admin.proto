@@ -1,0 +1,70 @@
+syntax = "proto3";
+
+package api.admin.v1;
+import "google/api/annotations.proto";
+option go_package = "drpshop/api/admin/v1;v1";
+option java_multiple_files = true;
+option java_package = "api.admin.v1";
+
+// Admin服务
+service AdminService {
+    //图片验证码
+    rpc CaptchaImg (CaptchaImgReq) returns (CaptchaImgResp);
+    //登录接口
+    rpc Login(LoginReq) returns(loginResp);
+    rpc UserInfo(InfoReq) returns(InfoResp);
+    rpc UserAdd(UserAddReq) returns(UserAddResp);
+    rpc UserList(UserListReq) returns(UserListResp);
+    rpc UserUpdate(UserUpdateReq) returns(UserUpdateResp);
+    rpc UserDelete(UserDeleteReq) returns(UserDeleteResp);
+    rpc ReSetPassword(ReSetPasswordReq) returns(ReSetPasswordResp);
+    rpc UpdateUserStatus(UserStatusReq) returns(UserStatusResp);
+
+}
+
+message CaptchaImgReq{
+  uint32 img_height = 1;
+  uint32 img_width = 2;
+  uint32 length = 3;
+}
+
+message CaptchaImgResp{
+  string captcha_id = 1;
+  string img_bytes = 2;
+}
+
+//user start---------------------
+message LoginReq {
+  string account = 1;
+  string password = 2;
+}
+
+message loginResp {
+  string AccessToken = 1;
+  int64 AccessExpire = 2;
+  int64 RefreshAfter = 3;
+}
+
+message InfoReq {
+  int64 UserId = 1;
+}
+
+message InfoResp {
+  string avatar = 1;
+  string name = 2;
+  repeated MenuListTree menuListTree=3;
+}
+
+message MenuListTree {
+  int64 id = 1;
+  string name = 2;
+  string icon = 3;
+  int64 parent_id = 4;
+  string path = 5;
+  string vue_path = 6;
+  string vue_component = 7;
+  string vue_icon = 8;
+  string vue_redirect = 9;
+}
+
+//user end---------------------

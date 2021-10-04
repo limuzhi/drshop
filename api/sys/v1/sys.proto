@@ -1,0 +1,1270 @@
+syntax = "proto3";
+
+package api.sys.v1;
+import "api/common/base.proto";
+option go_package = "drpshop/api/sys/v1;v1";
+option java_multiple_files = true;
+option java_package = "api.sys.v1";
+
+// Sys服务
+service SysService {
+    // 图片验证码
+    rpc CaptchaImg (CaptchaImgReq) returns (CaptchaImgRes);
+    // 发送验证码
+    rpc Captcha (CaptchaReq) returns (common.NullRes);
+
+    //用户-------
+    //用户登录
+    rpc Login (LoginReq) returns (LoginRes);
+    //检测rbac
+    rpc CheckCasbin (CheckCasbinReq) returns (CommonRes);
+    //获取个人信息
+    rpc UserProfile(UserInfoReq) returns(UserListData);
+    //修改个人信息
+    rpc UserProfileSet(UserProfileSetReq) returns(CommonRes);
+    //获取用户
+    rpc UserInfo(UserInfoReq) returns(UserInfoRes);
+    //创建用户
+    rpc UserAdd(UserAddReq) returns(CommonRes);
+    //列表用户信息
+    rpc UserList(UserListReq) returns(UserListRes);
+    //修改用户数据
+    rpc UserUpdate(UserUpdateReq) returns(CommonRes);
+    //删除用户数据
+    rpc UserDelete(UserDeleteReq) returns(CommonRes);
+    //重置用户密码
+    rpc ReSetPassword(ReSetPasswordReq) returns(CommonRes);
+    //修改用户密码
+    rpc ChangePwd(ChangePwdReq) returns(CommonRes);
+    //修改用户状态
+    rpc UpdateUserStatus(UserStatusReq) returns(CommonRes);
+    //获取角色和岗位列表
+    rpc GetUserPostRoleList(common.NullReq) returns(UserPostRoleListRes);
+    //登录IP更新
+    rpc LoginUserUpdate(LoginUserUpdateReq) returns(CommonRes);
+
+    //角色------
+    //创建角色
+    rpc RoleAdd(RoleAddReq) returns(CommonRes);
+    //角色列表数据
+    rpc RoleList(RoleListReq) returns(RoleListRes);
+    //修改用户角色
+    rpc RoleUpdate(RoleUpdateReq) returns(CommonRes);
+    //删除用户角色
+    rpc RoleDelete(RoleDeleteReq) returns(CommonRes);
+    //修改角色状态
+    rpc UpdateRoleStatus(UpdateRoleStatusReq) returns(CommonRes);
+    //获取角色的权限菜单
+    rpc GetMenusByRoleId(QueryMenuByRoleIdReq) returns(QueryMenuByRoleIdRes);
+    //更新角色的权限菜单
+    rpc UpdateMenuRole(UpdateMenuRoleReq) returns(CommonRes);
+    //获取角色的权限接口
+    rpc GetApisByRoleId(QueryApisByRoleIdReq) returns(QueryApisByRoleIdRes);
+    //更新角色的权限接口
+    rpc UpdateRoleApisById(UpdateApisRoleReq) returns(CommonRes);
+
+    //菜单----
+    //获取菜单列表
+    rpc MenuList(MenuListReq) returns(MenuListRes);
+    //获取菜单树
+    rpc MenuTreeList(MenuListReq) returns(MenuTreeListRes);
+    //创建菜单
+    rpc MenuAdd(MenuAddReq) returns(CommonRes);
+    //更新菜单
+    rpc MenuUpdate(MenuUpdateReq) returns(CommonRes);
+    //批量删除菜单
+    rpc MenuDelete(MenuDeleteReq) returns(CommonRes);
+    //获取用户的可访问菜单列表
+    rpc MenuListByUserId(MenuUserReq) returns(MenuListRes);
+    //获取用户的可访问菜单树
+    rpc MenuTreeListByUserId(MenuUserReq) returns(MenuTreeListRes);
+
+    //字典数据---
+    //添加字典数据
+    rpc DictDataAdd(DictDataAddReq) returns(CommonRes);
+    //字典数据列表
+    rpc DictDataList(DictDataListReq) returns(DictDataListRes);
+    //修改字典数据
+    rpc DictDataUpdate(DictDataUpdateReq) returns(CommonRes);
+    //删除字典数据
+    rpc DictDataDelete(DictDataDeleteReq) returns(CommonRes);
+    //通过编码获取字典数据
+    rpc DictDataInfoByDictCode(DictDataInfoByDictCodeReq) returns(DictDataListData);
+    //数据字典根据key获取
+    rpc DictDataListByDictType(DictDataListByDictTypeReq) returns(DictDataListRes);
+
+    //获取字典分类列表---
+    //添加字典分类数据
+    rpc DictTypeAdd(DictTypeAddReq) returns(CommonRes);
+    //获取字典分类列表
+    rpc DictTypeList(DictTypeListReq) returns(DictTypeListRes);
+    //获取字典分类info
+    rpc DictTypeInfo(DictTypeInfoReq) returns(DictTypeListData);
+    //修改字典分类数据
+    rpc DictTypeUpdate(DictTypeUpdateReq) returns(CommonRes);
+    //删除字典分类数据
+    rpc DictTypeDelete(DictTypeDeleteReq) returns(CommonRes);
+    //获取字典选择框列表
+    rpc DictTypeOptionSelect(CommonReq) returns(DictTypeListRes);
+
+    //登录日志---
+    rpc SaveLoginlog(LoginLogReq) returns(CommonRes);
+    //登录日志列表
+    rpc LoginlogList(LoginlogListReq) returns(LoginlogListRes);
+    //删除
+    rpc LoginlogDelete(LoginlogDeleteReq) returns(CommonRes);
+    //清空
+    rpc LoginlogClear(common.NullReq) returns(CommonRes);
+
+    //用户在线---
+    rpc SaveUserOnline(UserOnlineReq) returns(CommonRes);
+
+
+    //操作日志--
+    //操作日志列表
+    rpc OperLogList(OperLogListReq) returns(OperLogListRes);
+    //日志详细
+    rpc OperLogInfo(OperLogInfoReq) returns(OperLogInfoRes);
+    //操作日志删除
+    rpc OperLogDelete(OperLogDeleteReq) returns(common.NullRes);
+    //操作日志清空
+    rpc OperLogClear(common.NullReq) returns(common.NullRes);
+    //操作日志保存
+    rpc OperLogSave(OperLogSaveReq) returns(common.NullRes);
+
+    //接口
+    //接口详情
+    rpc ApisInfo(ApisInfoReq) returns(ApisInfoRes);
+    //获取接口列表
+    rpc ApisList(ApisListReq) returns(ApisListRes);
+    //获取接口树(按接口Category字段分类)
+    rpc ApisTreeList(common.NullReq) returns(ApisTreeListRes);
+    //创建接口
+    rpc ApisAdd(ApisAddReq) returns(common.NullRes);
+    //更新接口
+    rpc ApisUpdate(ApisUpdateReq) returns(common.NullRes);
+    //批量删除接口
+    rpc ApisDelete(ApisDeleteReq) returns(common.NullRes);
+
+    //部门
+    rpc DeptDetail(DeptDetailReq) returns(DeptDetailRes);
+    rpc DeptList(DeptListReq) returns(DeptListRes);
+    rpc DeptTree(DeptListReq) returns(DeptListRes);
+    rpc DeptCreate(DeptCreateUpdateReq) returns(common.NullRes);
+    rpc DeptUpdate(DeptCreateUpdateReq) returns(common.NullRes);
+    rpc DeptDelete(DeptDeleteReq) returns(common.NullRes);
+
+    //岗位
+    rpc PostDetail(PostDetailReq) returns(PostDetailRes);
+    rpc PostList(PostListReq) returns(PostListRes);
+    rpc PostCreate(PostCreateUpdateReq) returns(common.NullRes);
+    rpc PostUpdate(PostCreateUpdateReq) returns(common.NullRes);
+    rpc PostDelete(PostDeleteReq) returns(common.NullRes);
+
+    //配置
+    rpc ConfigDetail(ConfigDetailReq) returns(ConfigDetailRes);
+    rpc ConfigInfoByKey(ConfigInfoByKeyReq) returns(ConfigInfoByKeyRes);
+    rpc ConfigList(ConfigListReq) returns(ConfigListRes);
+    rpc ConfigCreate(ConfigCreateUpdateReq) returns(common.NullRes);
+    rpc ConfigUpdate(ConfigCreateUpdateReq) returns(common.NullRes);
+    rpc ConfigDelete(ConfigDeleteReq) returns(common.NullRes);
+
+}
+
+
+// 图片验证码
+message CaptchaImgReq{
+    uint32 height = 1;
+    uint32 width = 2;
+    uint32 length = 3;
+}
+
+
+message CaptchaImgRes{
+  string captcha_id = 1;
+  string b64s = 2;
+}
+
+//短信验证码
+message CaptchaReq{
+  //接收对象 email
+  string to = 1;
+  //本地验证码
+  string captcha = 2;
+  //本地验证码
+  string captcha_id = 3;
+}
+
+message CommonRes {
+  string pong = 1;
+}
+
+message CommonReq {
+}
+
+message CheckCasbinReq{
+    int64 userId = 1;
+    // 获得请求路径URL
+    string obj = 2;
+    // Method请求方式
+    string act = 3;
+}
+
+//user start---------------------
+//用户登录
+message LoginReq{
+    // 账户
+    string account = 1;
+    // 密码
+    string password = 2;
+    // 验证码
+    string captcha = 3;
+    // 验证码id
+    string captcha_id = 4;
+    // 短信、邮箱 验证码
+    string code = 5;
+}
+
+message LoginRes{
+  string token = 1;
+  int64 expire = 2;
+  int64 refreshAfter = 3;
+}
+
+message UserInfoReq{
+  int64 UserId = 1;
+}
+
+message UserProfileSetReq {
+    int64 userId = 1;
+    string nickname = 2;
+    string mobile = 3;
+    string email = 5;
+    int64 sex = 7;
+    string avatar = 8;
+    int64 updateBy = 14;
+}
+
+message UserInfoRes{
+  string avatar = 1;
+  string userName = 2;
+  string introduction = 3;
+  repeated int64 roleIds = 4;
+  repeated string roleKeys = 5;
+  repeated string permissions = 6;
+}
+
+message UserAddReq {
+  string username = 1;
+  string nickname = 2;
+  string mobile = 3;
+  string salt = 4;
+  string email = 5;
+  int64 deptId = 6;
+  int64 sex = 7;
+  string avatar = 8;
+  string password = 9;
+  string address = 10;
+  string remark = 11;
+  int64  isAdmin = 12;
+  string status = 13;
+  int64 createBy = 14;
+  repeated int64  roleIds = 15;
+  repeated int64  postIds = 16;
+}
+
+message UserListReq {
+  int64 pageNum = 1;
+  int64 pageSize = 2;
+  string username = 3;
+  string mobile = 5;
+  string email = 6;
+  string status = 7;
+  int64 deptId = 8;
+  int64 startTime = 9;
+  int64 endTime = 10;
+}
+
+message UserListData{
+    //用户ID
+    int64 userId = 1;
+    //用户名
+    string username = 2;
+    //中国手机不带国家代码，国际手机号格式为：国家代码-手机号
+    string mobile = 3;
+    //用户昵称
+    string nickname = 4;
+    //加密盐
+    string salt = 5;
+    //用户状态;1:禁用,2:正常,3:未验证
+    int64 status = 6;
+    //用户登录邮箱
+    string email = 7;
+    //联系地址
+    string address = 8;
+    //性别;0:保密,1:男,2:女
+    int32 sex = 9;
+    //用户头像
+    string avatar = 10;
+    //备注
+    string remark = 11;
+    //部门id
+    int64 deptId = 12;
+    int32  isAdmin = 13;
+    //生日
+    string birthday = 14;
+    //最后登录ip
+    string lastLoginIp = 15;
+    //最后登录时间
+    string lastLoginTime = 16;
+    //创建时间
+    string createdAt = 17;
+    //更新时间
+    string updatedAt = 18;
+
+    message userDept {
+        int64 deptId = 1;
+        string deptName = 2;
+    }
+    userDept deptInfo = 19;
+
+    message userRoles {
+        int64 roleId = 1;
+        string name = 2;
+        string roleKey = 3;
+    }
+    repeated userRoles roles = 20;
+
+    message userPosts {
+        int64 postId = 1;
+        string postCode = 2;
+        string postName = 3;
+    }
+    repeated userPosts posts = 21;
+}
+
+message UserListRes {
+  int64 total = 1;
+  repeated  UserListData list = 2;
+}
+
+message UserUpdateReq {
+    string username = 1;
+    string nickname = 2;
+    string mobile = 3;
+    string salt = 4;
+    string email = 5;
+    int64 deptId = 6;
+    int64 sex = 7;
+    string avatar = 8;
+    string password = 9;
+    string address = 10;
+    string remark = 11;
+    int64  isAdmin = 12;
+    string status = 13;
+    int64 updateBy = 14;
+    repeated int64  roleIds = 15;
+    repeated int64  postIds = 16;
+    int64 userId = 17;
+}
+
+message UserDeleteReq {
+    repeated int64 userIds = 1;
+}
+
+
+message ReSetPasswordReq {
+    int64 userId = 1;
+    int64 updateBy = 2;
+}
+
+message ChangePwdReq {
+    int64 userId = 1;
+    string oldPassword = 2;
+    string newPassword = 3;
+}
+
+
+message UserStatusReq {
+  int64 userId = 1;
+  int64 status = 2;
+}
+
+message LoginUserUpdateReq {
+    string LastLoginIp = 1;
+    int64  LastLoginTime = 2;
+    int64  userId = 3;
+}
+
+
+message UserPostRoleListRes {
+    message postInfo {
+      int64 postId = 1;
+      string postCode = 2;
+      string postName = 3;
+      int64 postSort = 4;
+      int64 status = 5;
+    }
+    repeated postInfo postList = 1;
+
+    message roleInfo {
+       int64 roleId = 1;
+       int64 pid = 2;
+       int64 status = 3;
+       int64 sort = 4;
+       string roleKey = 5;
+       string name = 6;
+    }
+    repeated roleInfo roleList = 2;
+
+    message deptInfo {
+        int64 deptId = 1;
+        int64 parentId = 2;
+        string deptName = 3;
+    }
+    repeated deptInfo deptList = 3;
+}
+
+//user end---------------------
+
+
+
+//role start---------------------
+message RoleAddReq {
+    //排序
+    int64 sort = 1;
+    //父角色ID
+    int64 pid = 2;
+    //角色名称
+    string name = 3;
+    //权限字符
+    string roleKey = 4;
+    //备注
+    string remark = 5;
+    //状态（2正常 1停用）
+    int64 status = 6;
+    //数据范围（1：全部数据权限 2：自定数据权限 3：本部门数据权限 4：本部门及以下数据权限）
+    int64 dataScope = 7;
+}
+
+message RoleListReq {
+  int64 pageNum = 1;
+  int64 pageSize = 2;
+  //角色名称
+  string name = 3;
+  //权限字符
+  string roleKey = 4;
+  //状态（2正常 1停用）
+  int64 status = 5;
+}
+
+message RoleListData {
+    int64 roleId = 1;
+    //角色名称
+    string name = 2;
+    //父角色ID
+    int64 pid = 3;
+    //权限字符
+    string roleKey = 4;
+    //备注
+    string remark = 5;
+    //排序
+    int64 sort = 6;
+    //数据范围（1：全部数据权限 2：自定数据权限 3：本部门数据权限 4：本部门及以下数据权限）
+    int64 dataScope = 7;
+    //状态（2正常 1停用）
+    int64 status = 8;
+}
+
+message RoleListRes {
+  int64 total = 1;
+  repeated  RoleListData list = 2;
+}
+
+message RoleUpdateReq {
+    int64 roleId = 1;
+    //角色名称
+    string name = 2;
+    //父角色ID
+    int64 pid = 3;
+    //权限字符
+    string roleKey = 4;
+    //备注
+    string remark = 5;
+    //排序
+    int64 sort = 6;
+    //数据范围（1：全部数据权限 2：自定数据权限 3：本部门数据权限 4：本部门及以下数据权限）
+    int64 dataScope = 7;
+    //状态（2正常 1停用）
+    int64 status = 8;
+}
+
+message RoleDeleteReq {
+  repeated int64 roleIds = 1;
+}
+
+message UpdateRoleStatusReq {
+  int64 roleId = 1;
+  //状态（2正常 1停用）
+  int64 status = 2;
+}
+
+message QueryMenuByRoleIdReq {
+  int64 roleId = 1;
+}
+
+message QueryMenuByRoleIdRes {
+    int64 total = 1;
+    repeated  MenuListData list = 2;
+}
+
+message UpdateMenuRoleReq {
+  int64 roleId = 1;
+  int64 userId = 2;
+  repeated int64 menuIds = 3;
+}
+
+message QueryApisByRoleIdReq {
+    int64 roleId = 1;
+}
+
+message QueryApisByRoleIdData {
+    int64 apiId = 1;
+    string handle = 2;
+    string title = 3;
+    string path = 4;
+    string method = 5;
+    string category = 6;
+    //创建日期
+    string createdAt = 7;
+    //修改日期
+    string updatedAt = 8;
+    int64 createBy = 9;
+    int64 updateBy = 10;
+}
+
+message QueryApisByRoleIdRes {
+    int64 total = 1;
+    repeated  QueryApisByRoleIdData list = 2;
+}
+
+message UpdateApisRoleReq {
+  int64 roleId = 1;
+  int64 userId = 2;
+  repeated int64 apiIds = 3;
+}
+
+//role end---------------------
+
+//menu start -----------------
+
+message MenuListReq {
+    string name = 1;
+    string status = 2;
+}
+
+message MenuListData {
+    int64 menuId = 1;
+    //父ID
+    int64 pid = 2;
+    //菜单名称
+    string name = 3;
+    //菜单标题
+    string title = 4;
+    //菜单图标
+    string icon = 5;
+    //菜单图标
+    int64 sort = 6;
+    //忽略之前定义的规则，一直显示根路由(1忽略，2不忽略)
+    int64 alwaysShow = 8;
+    //状态（2正常 1停用）
+    int64 status = 9;
+    //菜单在侧边栏隐藏(1隐藏，2显示)
+    int64 hidden = 10;
+    //面包屑可见性(1 可见/隐藏, 默认可见)
+    int64 breadcrumb = 11;
+    //路由地址
+    string path = 12;
+    //跳转路由
+    string jumpPath = 13;
+    //组件路径
+    string component = 14;
+    //是否外链 1是 0否
+    int64 is_frame = 15;
+    //所属模块
+    string moduleType = 16;
+    //模型ID
+    int64 modelId = 17;
+    //创建日期
+    string createdAt = 18;
+    //修改日期
+    string updatedAt = 19;
+    //子菜单集合
+    repeated  MenuListData children = 20;
+    //菜单是否被 <keep-alive> 缓存(1不缓存，2缓存)
+    int64 noCache = 21;
+    //在其它路由时，想在侧边栏高亮的路由
+    string activeMenu = 22;
+    //重定向路径
+    string redirect = 23;
+    int64 createBy = 24;
+    int64 updateBy = 25;
+}
+
+message MenuListRes {
+    int64 total = 1;
+    repeated  MenuListData list = 2;
+}
+
+message MenuTreeListRes {
+   repeated  MenuListData list = 2;
+}
+
+message MenuAddReq {
+    //父ID
+    int64 pid = 1;
+    //菜单名称
+    string name = 2;
+    //菜单标题
+    string title = 3;
+    //菜单图标
+    string icon = 4;
+    //菜单图标
+    int64 sort = 5;
+    //忽略之前定义的规则，一直显示根路由(1忽略，2不忽略)
+    int64 alwaysShow = 7;
+    //状态（2正常 1停用）
+    int64 status = 8;
+    //菜单在侧边栏隐藏(1隐藏，2显示)
+    int64 hidden = 9;
+    //面包屑可见性(1 可见/隐藏, 默认可见)
+    int64 breadcrumb = 10;
+    //路由地址
+    string path = 11;
+    //跳转路由
+    string jumpPath = 12;
+    //组件路径
+    string component = 13;
+    //是否外链 1是 0否
+    int64 is_frame = 14;
+    //所属模块
+    string moduleType = 15;
+    //模型ID
+    int64 modelId = 16;
+    //菜单是否被 <keep-alive> 缓存(1不缓存，2缓存)
+    int64 noCache = 17;
+    //在其它路由时，想在侧边栏高亮的路由
+    string activeMenu = 18;
+    //重定向路径
+    string redirect = 19;
+    int64 createBy = 20;
+}
+
+message MenuUpdateReq {
+    int64 menuId = 1;
+    //父ID
+    int64 pid = 2;
+    //菜单名称
+    string name = 3;
+    //菜单标题
+    string title = 4;
+    //菜单图标
+    string icon = 5;
+    //菜单图标
+    int64 sort = 6;
+    //忽略之前定义的规则，一直显示根路由(1忽略，2不忽略)
+    int64 alwaysShow = 8;
+    //状态（2正常 1停用）
+    int64 status = 9;
+    //菜单在侧边栏隐藏(1隐藏，2显示)
+    int64 hidden = 10;
+    //面包屑可见性(1 可见/隐藏, 默认可见)
+    int64 breadcrumb = 11;
+    //路由地址
+    string path = 12;
+    //跳转路由
+    string jumpPath = 13;
+    //组件路径
+    string component = 14;
+    //是否外链 1是 0否
+    int64 is_frame = 15;
+    //所属模块
+    string moduleType = 16;
+    //模型ID
+    int64 modelId = 17;
+    //菜单是否被 <keep-alive> 缓存(1不缓存，2缓存)
+    int64 noCache = 18;
+    //在其它路由时，想在侧边栏高亮的路由
+    string activeMenu = 19;
+    //重定向路径
+    string redirect = 20;
+    int64 updateBy = 21;
+}
+
+message MenuDeleteReq {
+  repeated  int64 menuIds = 1;
+}
+
+message MenuUserReq {
+    int64 userId = 1;
+}
+
+//menu end---------------------
+
+//dict start---------------------
+
+message DictDataAddReq {
+    //字典排序
+    int64 dictSort = 1;
+    //字典标签
+    string dictLabel = 2;
+    //字典键值
+    string dictValue = 3;
+    //字典类型
+    string dictType = 4;
+    //样式属性（其他样式扩展）
+    string cssClass = 5;
+    //表格回显样式
+    string listClass = 6;
+    //是否默认（1是 2否）
+    int64 isDefault = 7;
+    //状态（2正常 1停用）
+    int64 status = 8;
+    int64 createBy = 9;
+    string remark = 10;
+}
+
+message DictDataListReq {
+    //字典标签
+    string dictLabel = 1;
+    //字典键值
+    string dictValue = 2;
+    //字典类型
+    string dictType = 3;
+    //状态（2正常 1停用）
+    int64 status = 4;
+    common.PageReq  pageInfo = 5 ;
+}
+
+message DictDataListData {
+    //字典编码
+    int64 dictCode = 1;
+    //字典排序
+    int64 dictSort = 2;
+    //字典标签
+    string dictLabel = 3;
+    //字典键值
+    string dictValue = 4;
+    //字典类型
+    string dictType = 5;
+    //样式属性（其他样式扩展）
+    string cssClass = 6;
+    //表格回显样式
+    string listClass = 7;
+    //是否默认（1是 2否）
+    int64 isDefault = 8;
+    //状态（2正常 1停用）
+    int64 status = 9;
+    int64 createBy = 10;
+    int64 updateBy = 11;
+    string remark = 12;
+    //创建日期
+    string createdAt = 13;
+    //修改日期
+    string updatedAt = 14;
+}
+
+message DictDataListRes{
+    int64 total = 1;
+    repeated  DictDataListData list = 2;
+}
+
+message DictDataUpdateReq {
+    //字典编码
+    int64 dictCode = 1;
+    //字典排序
+    int64 dictSort = 2;
+    //字典标签
+    string dictLabel = 3;
+    //字典键值
+    string dictValue = 4;
+    //字典类型
+    string dictType = 5;
+    //样式属性（其他样式扩展）
+    string cssClass = 6;
+    //表格回显样式
+    string listClass = 7;
+    //是否默认（1是 2否）
+    int64 isDefault = 8;
+    //状态（2正常 1停用）
+    int64 status = 9;
+    int64 updateBy = 10;
+    string remark = 11;
+}
+
+message DictDataDeleteReq {
+    repeated  int64 dictCodes = 1;
+}
+
+message DictDataInfoByDictCodeReq {
+    int64 dictCode = 1;
+}
+
+message DictDataListByDictTypeReq{
+    string dictType = 1;
+}
+
+//获取字典分类列表---
+message DictTypeAddReq {
+    //字典名称
+    string dictName = 1;
+    //字典类型
+    string dictType = 2;
+    //状态（2正常 1停用）
+    int64 status = 3;
+    int64 create_by = 4;
+    string remark = 5;
+}
+
+message DictTypeListReq {
+    //字典名称
+    string dictName = 1;
+    //字典类型
+    string dictType = 2;
+    //字典状态 （2正常 1停用)
+    int64 status = 3;
+    common.PageReq pageInfo = 4;
+}
+
+message DictTypeListData {
+    //字典主键
+    int64 dictId = 1;
+    //字典名称
+    string dictName = 2;
+    //字典类型
+    string dictType = 3;
+    //状态（2正常 1停用）
+    int64 status = 4;
+    int64 create_by = 5;
+    int64 update_by = 6;
+    string remark = 7;
+    //创建日期
+    string createdAt = 13;
+    //修改日期
+    string updatedAt = 14;
+}
+
+message DictTypeListRes {
+    int64 total = 1;
+    repeated  DictTypeListData list = 2;
+}
+
+message DictTypeInfoReq {
+   //字典主键
+   int64 dictId = 1;
+}
+
+message DictTypeUpdateReq {
+    //字典主键
+    int64 dictId = 1;
+    //字典名称
+    string dictName = 2;
+    //字典类型
+    string dictType = 3;
+    //状态（2正常 1停用）
+    int64 status = 4;
+    int64 update_by = 5;
+    string remark = 6;
+}
+
+message DictTypeDeleteReq {
+    repeated  int64 dictIds = 1;
+}
+
+//dict end---------------------
+
+//loginLog start------登录日志---------------
+message LoginLogReq {
+    //登录账号
+    string loginName = 1;
+    //字典名称
+    int64 loginUid = 2;
+    //登录IP地址
+    string ipaddr = 3;
+    //登录地点
+    string loginLocation = 4;
+    //浏览器类型
+    string browser = 5;
+    //操作系统
+    string os = 6;
+    //登录状态（2成功 1失败）
+    int32 status = 7;
+    //提示消息
+    string msg = 8;
+    //登录时间
+    int64 loginTime = 9;
+    //操作系统
+    string module = 10;
+}
+
+message LoginlogListReq {
+    //登录账号
+    string loginName = 1;
+    //登录IP地址
+    string ipaddr = 2;
+    //登录地点
+    string loginLocation = 3;
+    //登录状态（2成功 1失败）
+    int32 status = 4;
+    common.PageReq  pageInfo = 5 ;
+}
+
+message LoginlogListData {
+    //登录账号
+    string loginName = 1;
+    //字典名称
+    int64 loginUid = 2;
+    //登录IP地址
+    string ipaddr = 3;
+    //登录地点
+    string loginLocation = 4;
+    //浏览器类型
+    string browser = 5;
+    //操作系统
+    string os = 6;
+    //登录状态（2成功 1失败）
+    int32 status = 7;
+    //提示消息
+    string msg = 8;
+    //登录时间
+    string loginTime = 9;
+    //编号
+    int64 loginId = 10;
+}
+
+message LoginlogListRes {
+    int64 total = 1 ;
+    repeated LoginlogListData list = 2;
+}
+
+message LoginlogDeleteReq {
+    repeated  int64 loginIds = 1;
+}
+
+//loginLog end------------------------
+
+
+//UserOnline start----------用户在线-----------
+message UserOnlineReq {
+    //用户标识
+    string uuid = 1;
+    //用户token
+    string token = 2;
+    //登录时间
+    int64 createTime = 3;
+    //用户名
+    string username = 4;
+    //用户id
+    int64 userId = 5;
+    //登录ip
+    string ip = 6;
+    //浏览器
+    string explorer = 7;
+    //操作系统
+    string os = 8;
+}
+//UserOnline end---------------------
+
+
+//操作日志----start---
+message OperLogListReq {
+   string  title = 1; //系统模块
+   string  operName = 2; //操作人员
+   string  status = 3; //操作状态
+   string  businessType = 4; //业务类型（0其它 1新增 2修改 3删除）
+   common.PageReq  pageInfo = 5 ;
+}
+
+message OperLogListRes {
+    int64 total = 1;
+    repeated OperLogInfoRes list = 2;
+}
+
+message OperLogInfoReq {
+    int64 operId = 1;
+}
+
+message OperLogInfoRes {
+    int64 operId = 1;
+    string title = 2; //操作模块标题
+    int32 businessType = 3; //业务类型（0其它 1新增 2修改 3删除
+    string method = 4; //方法名称
+    string requestMethod = 5; //请求方式
+    int32 operatorType = 6; //操作类别（0其它 1后台用户 2手机端用户）
+    string operName = 7; //操作人员
+    string operUrl = 8; //请求URL
+    string operIp = 9; //请求主机地址
+    string operLocation = 10; //操作地点
+    string operParam = 11; //请求参数
+    string jsonResult = 12; //返回参数
+    string status = 13; //操作状态（2正常 1异常）
+    string errorMsg = 14; //错误消息
+    string operTime = 15; //操作时间
+    int64 timeCost = 16; //请求耗时(ms)
+    int64 userId = 17; //操作用户Id
+}
+
+message OperLogDeleteReq {
+    repeated int64 operId = 1;
+}
+
+message OperLogSaveData {
+    string title = 1; //操作模块标题
+    string businessType = 2; //业务类型（0其它 1新增 2修改 3删除
+    string method = 3; //方法名称
+    string requestMethod = 4; //请求方式
+    string operatorType = 5; //操作类别（0其它 1后台用户 2手机端用户）
+    string operName = 6; //操作人员
+    string operUrl = 7; //请求URL
+    string operIp = 8; //请求主机地址
+    string operLocation = 9; //操作地点
+    string operParam = 10; //请求参数
+    string jsonResult = 11; //返回参数
+    string status = 12; //操作状态（2正常 1异常）
+    string errorMsg = 13; //错误消息
+    int64 operTime = 14; //操作时间
+    int64 timeCost = 15; //请求耗时(ms)
+    int64 userId = 16; //操作用户Id
+}
+
+message OperLogSaveReq {
+    repeated OperLogSaveData logList = 1;
+}
+//操作日志----end---
+
+//接口----start--------
+//接口详情
+message ApisInfoReq {
+   int64 ApiId = 1;
+}
+
+message ApisInfoRes {
+    int64 apiId = 1;
+    string handle = 2;
+    string title = 3;
+    string path = 4;
+    string method = 5;
+    string category = 6;
+    string createdAt = 7;
+    string updatedAt = 8;
+    int64 createBy = 9;
+    int64 updateBy = 10;
+    string permission = 11;
+}
+
+message ApisListReq {
+   string  method = 1; //接口类型-请求方式
+   string  path = 2; //访问路径
+   string  category = 3; //所属类别
+   common.PageReq  pageInfo = 5 ;
+}
+
+message ApisListRes {
+    int64 total = 1;
+    repeated ApisInfoRes list = 2;
+}
+
+message ApisTreeData {
+    int64 apiId = 1;
+    string title = 2;
+    string category = 3;
+    repeated ApisTreeData children = 4;
+}
+
+message ApisTreeListRes {
+    repeated ApisTreeData list = 1;
+}
+
+message ApisAddReq {
+    string handle = 1;
+    string title = 2;
+    string path = 3;
+    string method = 4;
+    string category = 5;
+    int64 createBy = 6;
+    string permission = 7;
+}
+
+message ApisUpdateReq {
+    int64 apiId = 1;
+    string handle = 2;
+    string title = 3;
+    string path = 4;
+    string method = 5;
+    string category = 6;
+    int64 updateBy = 7;
+    string permission = 8;
+}
+
+message ApisDeleteReq {
+    repeated int64 apiIds = 1;
+}
+//接口------end--------
+
+//部门----start--
+
+message DeptDetailReq {
+     int64 deptId = 1;
+}
+
+message DeptDetailRes {
+    int64 deptId = 1;
+    int64 parentId = 2;
+    string ancestors = 3;
+    string deptName = 4;
+    int64 sort = 5;
+    string leader = 6;
+    string phone = 7;
+    string email = 8;
+    int64 status = 9;
+    int64 createBy = 10;
+    int64 updateBy = 11;
+    string createdAt = 12;
+    string updatedAt = 13;
+    repeated DeptDetailRes children = 14;
+}
+
+message DeptListReq {
+    string deptName = 1;
+    string status = 2;
+}
+
+message DeptListRes {
+    int64 total = 1;
+    repeated DeptDetailRes list = 2;
+}
+
+message DeptCreateUpdateReq {
+    int64 deptId = 1;
+    int64 parentId = 2;
+    string ancestors = 3;
+    string deptName = 4;
+    int64 sort = 5;
+    string leader = 6;
+    string phone = 7;
+    string email = 8;
+    int64 status = 9;
+    int64 createBy = 10;
+    int64 updateBy = 11;
+}
+
+message DeptDeleteReq {
+    repeated int64 deptIds = 1;
+}
+
+
+//岗位
+message PostDetailReq {
+    int64 postId = 1;
+}
+
+message PostDetailRes {
+    int64 postId = 1;
+    string postCode = 2;
+    string postName = 3;
+    int64 postSort = 4;
+    int64 status = 5;
+    string remark = 6;
+    int64 createBy = 7;
+    int64 updateBy = 8;
+    string createdAt = 9;
+    string updatedAt = 10;
+}
+
+message PostListReq {
+    string postCode = 1;
+    string postName = 2;
+    int64 status = 3;
+    common.PageReq pageInfo = 4;
+}
+
+message PostListRes {
+    int64 total = 1;
+    repeated PostDetailRes list = 2;
+}
+
+message PostCreateUpdateReq {
+    int64 postId = 1;
+    string postCode = 2;
+    string postName = 3;
+    int64 postSort = 4;
+    int64 status = 5;
+    string remark = 6;
+    int64 createBy = 7;
+    int64 updateBy = 8;
+}
+
+message PostDeleteReq {
+    repeated int64 postIds = 1;
+}
+
+
+//配置 ---start--
+
+message ConfigDetailReq {
+    int64 configId = 1;
+}
+
+message ConfigDetailRes {
+    int64 configId = 1;
+    string configName = 2;
+    string configKey = 3;
+    string configValue = 4;
+    int64 configType = 5;
+    int64 isFrontend = 6;
+    int64 createBy = 7;
+    int64 updateBy = 8;
+    string createdAt = 9;
+    string updatedAt = 10;
+    string remark = 11;
+}
+
+message ConfigInfoByKeyReq {
+    string configKey = 1;
+}
+
+message ConfigInfoByKeyRes {
+    int64  configId = 1;
+    string configKey = 2;
+    string configValue = 3;
+}
+
+
+message ConfigListReq {
+    string configName = 2;
+    string configKey = 3;
+    string configType = 1;
+    common.PageReq pageInfo = 4;
+}
+
+message ConfigListRes {
+    int64 total = 1;
+    repeated ConfigDetailRes list = 2;
+}
+
+message ConfigCreateUpdateReq {
+    int64 configId = 1;
+    string configName = 2;
+    string configKey = 3;
+    string configValue = 4;
+    int64 configType = 5;
+    int64 isFrontend = 6;
+    int64 createBy = 7;
+    int64 updateBy = 8;
+    string remark = 9;
+}
+
+message ConfigDeleteReq {
+    repeated int64 configIds = 1;
+}
+//配置 end ---
