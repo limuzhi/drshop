@@ -201,7 +201,6 @@ func (r *userRepo) CreateUser(ctx context.Context, req *vo.CreateUserReq) error 
 		Username: strings.TrimSpace(req.Username),
 		Nickname: strings.TrimSpace(req.Nickname),
 		Mobile:   strings.TrimSpace(req.Mobile),
-		Salt:     strings.TrimSpace(req.Salt),
 		Email:    strings.TrimSpace(req.Email),
 		DeptId:   req.DeptId,
 		Sex:      gconv.Int64(req.Sex),

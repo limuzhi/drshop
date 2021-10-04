@@ -52,7 +52,6 @@ type CreateUserReq struct {
 	SetUserReq
 	Username string `form:"username" json:"username" validate:"required"`
 	Password string `form:"password" json:"password" validate:"required"`
-	Salt     string
 	CreateBy int64
 }
 
