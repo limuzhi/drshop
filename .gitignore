@@ -9,7 +9,7 @@ temp/
 logs
 docs
 deploy
-configs/
+configs/*.yaml
 
 # go sum
 go.sum 
