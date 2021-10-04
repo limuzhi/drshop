@@ -5,7 +5,6 @@ import (
 	"crypto/md5"
 	"drpshop/pkg/util"
 	"encoding/hex"
-	"fmt"
 )
 
 type SysUser struct {
@@ -39,16 +38,17 @@ func (e *SysUser) TableName() string {
 	return "sys_user"
 }
 
-
 // 检查密码
 func (e *SysUser) CheckPassword(password string) bool {
-	fmt.Println("=====e.GenPassword(password) == e.Password:",e.GenPassword(password) == e.Password,"====")
 	return e.GenPassword(password) == e.Password
 }
 
 // 创建密码
 func (e *SysUser) SetPassword(password string) {
-	e.Salt = util.RandomString(4)
+	if password == "" {
+		password = "123456"
+	}
+	e.Salt = util.RandomString(10)
 	e.Password = e.GenPassword(password)
 }
 
@@ -57,6 +57,5 @@ func (e *SysUser) GenPassword(password string) string {
 	hmacEnt := hmac.New(md5.New, []byte(e.Salt))
 	hmacEnt.Write([]byte(password))
 	str := hex.EncodeToString(hmacEnt.Sum([]byte("")))
-	fmt.Println("=====password:",password,"==pwd:",str,"=====e.password:",e.Password,"===")
 	return str
 }

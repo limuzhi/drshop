@@ -309,18 +309,10 @@ func (s *SysService) UserDelete(ctx context.Context, req *v1.UserDeleteReq) (*v1
 
 func (s *SysService) UserAdd(ctx context.Context, req *v1.UserAddReq) (*v1.CommonRes, error) {
 	password := strings.TrimSpace(req.Password)
-	if password == "" {
-		password = "123456"
-	}
-	salt := strings.TrimSpace(req.Salt)
-	if salt == "" {
-		salt = util.RandomString(4)
-	}
 	insert := &model.SysUser{
 		Username: req.Username,
 		Nickname: req.Nickname,
 		Mobile:   req.Mobile,
-		Salt:     salt,
 		Email:    req.Email,
 		DeptId:   req.DeptId,
 		Sex:      int(req.Sex),

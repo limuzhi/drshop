@@ -258,19 +258,18 @@ message UserAddReq {
   string username = 1;
   string nickname = 2;
   string mobile = 3;
-  string salt = 4;
-  string email = 5;
-  int64 deptId = 6;
-  int64 sex = 7;
-  string avatar = 8;
-  string password = 9;
-  string address = 10;
-  string remark = 11;
-  int64  isAdmin = 12;
-  string status = 13;
-  int64 createBy = 14;
-  repeated int64  roleIds = 15;
-  repeated int64  postIds = 16;
+  string email = 4;
+  int64 deptId = 5;
+  int64 sex = 6;
+  string avatar = 7;
+  string password = 8;
+  string address = 9;
+  string remark = 10;
+  int64  isAdmin = 11;
+  string status = 12;
+  int64 createBy = 13;
+  repeated int64  roleIds = 14;
+  repeated int64  postIds = 15;
 }
 
 message UserListReq {

@@ -42,6 +42,10 @@ func OperationLogMiddleware() gin.HandlerFunc {
 				if strings.Index(contentType, "application/json") > -1 {
 					var queryMap map[string]interface{}
 					_ = json.Unmarshal(body, &queryMap)
+					//处理一些敏感数据--后面密码进行加密解码处理
+					if _, ok := queryMap["password"]; ok {
+						delete(queryMap, "password")
+					}
 					b, _ := json.Marshal(queryMap)
 					operParam = string(b)
 				}
@@ -110,4 +114,3 @@ func OperationLogMiddleware() gin.HandlerFunc {
 		OperLogChan <- &operLog
 	}
 }
-
