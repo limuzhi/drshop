@@ -8,7 +8,8 @@ temp/
 !temp
 logs
 docs
-deploy 
+deploy
+configs/
 
 # go sum
 go.sum 
