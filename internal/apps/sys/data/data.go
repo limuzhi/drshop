@@ -2,7 +2,6 @@ package data
 
 import (
 	"context"
-	"os"
 	"time"
 
 	taskv1 "drpshop/api/tasknode/v1"
@@ -76,14 +75,7 @@ func NewData(c *conf.Data, logger log.Logger, uc *conf.UserConfig) (*Data, func(
 		return nil, func() {}, err
 	}
 	db := NewDbClient(c, logger)
-
-	dir,err := os.Getwd()
-	if err != nil {
-		log.Errorf("failed Getwd ", err)
-		return nil, func() {}, err
-	} 
-    casbinPath := dir + "\\" + c.CasbinModelPath
-	casbinEnforcer, err := NewCasbinEnforcer(casbinPath, db)
+	casbinEnforcer, err := NewCasbinEnforcer(c.CasbinModelPath, db)
 	if err != nil {
 		log.Errorf("failed init casbinEnforcer ", err)
 		return nil, func() {}, err
