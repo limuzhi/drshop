@@ -199,7 +199,6 @@ func (s *SysService) UserList(ctx context.Context, req *v1.UserListReq) (*v1.Use
 			Username:      v.Username,
 			Mobile:        v.Mobile,
 			Nickname:      v.Nickname,
-			Salt:          v.Salt,
 			Status:        v.Status,
 			Email:         v.Email,
 			Address:       v.Address,

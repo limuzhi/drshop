@@ -45,10 +45,8 @@ func (e *SysUser) CheckPassword(password string) bool {
 
 // 创建密码
 func (e *SysUser) SetPassword(password string) {
-	if password == "" {
-		password = "123456"
-	}
-	e.Salt = util.RandomString(10)
+	salt := util.RandomString(10)
+	e.Salt = salt
 	e.Password = e.GenPassword(password)
 }
 
