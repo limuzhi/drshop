@@ -1,12 +1,11 @@
-package notify
+package biz
 
 import (
 	"strconv"
 	"strings"
 	"time"
 
-	"drpshop/internal/apps/sys/biz"
-	"drpshop/internal/apps/sys/data/model"
+	"drpshop/internal/apps/sys/model"
 
 	"github.com/go-gomail/gomail"
 	"github.com/go-kratos/kratos/v2/log"
@@ -14,10 +13,10 @@ import (
 
 type MailUsecase struct {
 	log  *log.Helper
-	repo biz.SysTemplateRepo
+	repo SysTemplateRepo
 }
 
-func NewMailUsecase(repo biz.SysTemplateRepo, logger log.Logger) *MailUsecase {
+func NewMailUsecase(repo SysTemplateRepo, logger log.Logger) *MailUsecase {
 	return &MailUsecase{
 		repo: repo,
 		log:  log.NewHelper(log.With(logger, "module", "sys/notify/mail")),

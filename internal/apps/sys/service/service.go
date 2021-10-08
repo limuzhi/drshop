@@ -4,7 +4,6 @@ import (
 	v1 "drpshop/api/sys/v1"
 	"drpshop/internal/apps/sys/biz"
 	"drpshop/internal/apps/sys/data"
-	"drpshop/internal/apps/sys/service/notify"
 	"drpshop/internal/conf"
 	"drpshop/pkg/captcha"
 	"github.com/go-redis/redis/v8"
@@ -14,7 +13,7 @@ import (
 )
 
 // ProviderSet is service providers.
-var ProviderSet = wire.NewSet(NewSysService, NewTaskService, NewNotifyService)
+var ProviderSet = wire.NewSet(NewSysService, NewNotifyService)
 
 type SysService struct {
 	v1.UnimplementedSysServiceServer
@@ -35,10 +34,9 @@ type SysService struct {
 	userc       *biz.SysUserUsecase
 	userOnlinec *biz.SysUserOnlineUsecase
 
-	taskSrc *TaskService
-	log     *log.Helper
-	store   *captcha.RedisStore
-	domain  string
+	log    *log.Helper
+	store  *captcha.RedisStore
+	domain string
 }
 
 func NewSysService(c *conf.Data, u *conf.UserConfig, logger log.Logger) (*SysService, func(), error) {
@@ -58,18 +56,23 @@ func NewSysService(c *conf.Data, u *conf.UserConfig, logger log.Logger) (*SysSer
 	operlogRepo := data.NewSysOperLogRepo(dataData, logger)
 	postRepo := data.NewSysPostRepo(dataData, logger)
 	roleRepo := data.NewSysRoleRepo(dataData, logger)
-	taskRepo := data.NewSysTaskRepo(dataData, logger)
+
 	templateRepo := data.NewSysTemplateRepo(dataData, logger)
 	userRepo := data.NewSysUserRepo(dataData, logger)
 	userOnlineRepo := data.NewSysUserOnlineRepo(dataData, logger)
 
-	taskSrc := NewTaskService(taskRepo, logger)
-	taskSrc.Initialize()
-
 	go func() {
-		notifySrcc := notify.NewNotifyUsecase(templateRepo, logger)
+		notifySrcc := biz.NewNotifyUsecase(templateRepo, logger)
 		notifySrcc.Run()
 	}()
+
+	//任务管理
+	taskRepo := data.NewSysTaskRepo(dataData, logger)
+	taskc := biz.NewSysTaskUsecase(taskRepo, logger)
+
+	taskGrpcRepo := data.NewTaskGrpcPoolRepo(dataData, logger)
+	taskSerivce := biz.NewTaskServiceUsecase(taskRepo, taskGrpcRepo, logger)
+	taskSerivce.Initialize()
 
 	return &SysService{
 		apic:        biz.NewSysApisUsecase(apisRepo, logger),
@@ -84,11 +87,10 @@ func NewSysService(c *conf.Data, u *conf.UserConfig, logger log.Logger) (*SysSer
 		operlogc:    biz.NewSysOperLogUsecase(operlogRepo, logger),
 		postc:       biz.NewSysPostUsecase(postRepo, logger),
 		rolec:       biz.NewSysRoleUsecase(roleRepo, logger),
-		taskc:       biz.NewSysTaskUsecase(taskRepo, logger),
+		taskc:       taskc,
 		templcatec:  biz.NewSysTemplateUsecase(templateRepo, logger),
 		userc:       biz.NewSysUserUsecase(userRepo, logger),
 		userOnlinec: biz.NewSysUserOnlineUsecase(userOnlineRepo, logger),
-		taskSrc:     taskSrc,
 		log:         log.NewHelper(log.With(logger, "module", "service/sys-service")),
 		store: captcha.NewRedisStore(redis.NewClient(&redis.Options{
 			Addr:         c.Redis.Addr,

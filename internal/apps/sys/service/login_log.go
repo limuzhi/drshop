@@ -4,16 +4,18 @@ import (
 	"context"
 	"drpshop/api/common"
 	v1 "drpshop/api/sys/v1"
-	"drpshop/internal/apps/sys/data/model"
+	"drpshop/internal/apps/sys/model"
+	"drpshop/pkg/util"
 	"github.com/go-kratos/kratos/v2/errors"
 )
 
 func (s *SysService) SaveLoginlog(ctx context.Context, req *v1.LoginLogReq) (*v1.CommonRes, error) {
+
 	err := s.loginLogc.SaveLoginlog(ctx, &model.SysLoginLog{
 		LoginName:     req.LoginName,
 		LoginUid:      req.LoginUid,
 		Ipaddr:        req.Ipaddr,
-		LoginLocation: req.LoginLocation,
+		LoginLocation: util.GetCityByIp(req.Ipaddr),
 		Browser:       req.Browser,
 		Os:            req.Os,
 		Msg:           req.Msg,

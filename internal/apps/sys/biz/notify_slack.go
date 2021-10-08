@@ -1,8 +1,7 @@
-package notify
+package biz
 
 import (
-	"drpshop/internal/apps/sys/biz"
-	"drpshop/internal/apps/sys/data/model"
+	"drpshop/internal/apps/sys/model"
 	"drpshop/pkg/httpclient"
 	"fmt"
 	"github.com/go-kratos/kratos/v2/log"
@@ -14,10 +13,10 @@ import (
 
 type SlackUsecase struct {
 	log  *log.Helper
-	repo biz.SysTemplateRepo
+	repo SysTemplateRepo
 }
 
-func NewSlackUsecase(repo biz.SysTemplateRepo, logger log.Logger) *SlackUsecase {
+func NewSlackUsecase(repo SysTemplateRepo, logger log.Logger) *SlackUsecase {
 	return &SlackUsecase{
 		repo: repo,
 		log:  log.NewHelper(log.With(logger, "module", "sys/notify/slack")),

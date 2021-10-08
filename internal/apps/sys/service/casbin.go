@@ -3,7 +3,7 @@ package service
 import (
 	"context"
 	v1 "drpshop/api/sys/v1"
-	"drpshop/internal/apps/sys/data/model"
+	"drpshop/internal/apps/sys/model"
 	"drpshop/pkg/token"
 	"github.com/go-kratos/kratos/v2/errors"
 	"strings"

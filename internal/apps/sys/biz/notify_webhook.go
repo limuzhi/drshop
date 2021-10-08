@@ -1,7 +1,6 @@
-package notify
+package biz
 
 import (
-	"drpshop/internal/apps/sys/biz"
 	"drpshop/pkg/httpclient"
 	"github.com/go-kratos/kratos/v2/log"
 	"html"
@@ -10,16 +9,15 @@ import (
 
 type WebhookUsecase struct {
 	log  *log.Helper
-	repo biz.SysTemplateRepo
+	repo SysTemplateRepo
 }
 
-func NewWebhookUsecase(repo biz.SysTemplateRepo, logger log.Logger) *WebhookUsecase {
+func NewWebhookUsecase(repo SysTemplateRepo, logger log.Logger) *WebhookUsecase {
 	return &WebhookUsecase{
 		repo: repo,
 		log:  log.NewHelper(log.With(logger, "module", "sys/notify/webhook")),
 	}
 }
-
 
 func (uc *WebhookUsecase) Send(msg Message) {
 	webHookSetting, err := uc.repo.Webhook()

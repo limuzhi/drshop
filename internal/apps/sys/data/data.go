@@ -4,7 +4,7 @@ import (
 	"context"
 	"time"
 
-	taskv1 "drpshop/api/tasknode/v1"
+	taskv1 "drpshop/api/task/v1"
 	"drpshop/internal/conf"
 	"drpshop/pkg/token"
 
@@ -51,7 +51,7 @@ func NewDbClient(conf *conf.Data, logger log.Logger) *gorm.DB {
 	if err != nil {
 		log.Fatalf("failed opening connection to sqlDB: %v", err)
 	}
-     //最大链接数
+	//最大链接数
 	// SetMaxOpenConns sets the maximum number of open connections to the database.
 	sqlDB.SetMaxOpenConns(int(conf.Database.MaxOpenConnections))
 
@@ -119,12 +119,13 @@ func NewDiscovery(addr, scheme string) registry.Discovery {
 	return r
 }
 
-func NewTaskServiceClient(r registry.Discovery) (*grpct.ClientConn, taskv1.TaskClient, error) {
+func NewTaskServiceClient(endpoint string) (*grpct.ClientConn, taskv1.TaskServiceClient, error) {
+    r := NewDiscovery(endpoint, "http")
 	ctx, cancel := context.WithTimeout(context.Background(), 2*time.Second)
 	defer cancel()
 	conn, err := grpc.DialInsecure(
 		ctx,
-		grpc.WithEndpoint("discovery:///task.node.service"),
+		grpc.WithEndpoint(endpoint),
 		grpc.WithDiscovery(r),
 		grpc.WithMiddleware(
 			recovery.Recovery(),
@@ -133,7 +134,7 @@ func NewTaskServiceClient(r registry.Discovery) (*grpct.ClientConn, taskv1.TaskC
 	if err != nil {
 		return nil, nil, err
 	}
-	c := taskv1.NewTaskClient(conn)
+	c := taskv1.NewTaskServiceClient(conn)
 	return conn, c, nil
 }
 

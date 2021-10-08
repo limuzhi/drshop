@@ -4,7 +4,7 @@ import (
 	"context"
 	"drpshop/api/common"
 	v1 "drpshop/api/sys/v1"
-	"drpshop/internal/apps/sys/data/model"
+	"drpshop/internal/apps/sys/model"
 )
 
 //岗位

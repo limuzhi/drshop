@@ -1,8 +1,7 @@
-package notify
+package biz
 
 import (
 	"bytes"
-	"drpshop/internal/apps/sys/biz"
 	"fmt"
 	"github.com/go-kratos/kratos/v2/log"
 	"html/template"
@@ -20,16 +19,16 @@ type NotifyUsecase struct {
 	mailSrv    *MailUsecase
 	slackSrv   *SlackUsecase
 	webhookSrv *WebhookUsecase
-	repo       biz.SysTemplateRepo
+	repo       SysTemplateRepo
 }
 
-func NewNotifyUsecase(repo biz.SysTemplateRepo, logger log.Logger) *NotifyUsecase {
+func NewNotifyUsecase(repo SysTemplateRepo, logger log.Logger) *NotifyUsecase {
 	return &NotifyUsecase{
-		repo: repo,
-		mailSrv: NewMailUsecase(repo,logger),
-		slackSrv: NewSlackUsecase(repo,logger),
-		webhookSrv: NewWebhookUsecase(repo,logger),
-		log:  log.NewHelper(log.With(logger, "module", "sys/notify")),
+		repo:       repo,
+		mailSrv:    NewMailUsecase(repo, logger),
+		slackSrv:   NewSlackUsecase(repo, logger),
+		webhookSrv: NewWebhookUsecase(repo, logger),
+		log:        log.NewHelper(log.With(logger, "module", "sys/notify")),
 	}
 }
 

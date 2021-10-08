@@ -166,6 +166,24 @@ type SysServiceClient interface {
 	ConfigCreate(ctx context.Context, in *ConfigCreateUpdateReq, opts ...grpc.CallOption) (*common.NullRes, error)
 	ConfigUpdate(ctx context.Context, in *ConfigCreateUpdateReq, opts ...grpc.CallOption) (*common.NullRes, error)
 	ConfigDelete(ctx context.Context, in *ConfigDeleteReq, opts ...grpc.CallOption) (*common.NullRes, error)
+	//任务日志
+	TaskLogList(ctx context.Context, in *TaskLogListReq, opts ...grpc.CallOption) (*TaskLogListRes, error)
+	TaskLogClear(ctx context.Context, in *common.NullReq, opts ...grpc.CallOption) (*common.NullRes, error)
+	TaskLogStop(ctx context.Context, in *TaskLogStopReq, opts ...grpc.CallOption) (*common.NullRes, error)
+	//任务节点
+	HostList(ctx context.Context, in *HostListReq, opts ...grpc.CallOption) (*HostListRes, error)
+	HostDetail(ctx context.Context, in *HostDetailReq, opts ...grpc.CallOption) (*HostData, error)
+	//保存与更新
+	HostSave(ctx context.Context, in *HostSaveReq, opts ...grpc.CallOption) (*CommonRes, error)
+	HostDelete(ctx context.Context, in *HostDeleteReq, opts ...grpc.CallOption) (*CommonRes, error)
+	HostPing(ctx context.Context, in *HostPingReq, opts ...grpc.CallOption) (*CommonRes, error)
+	//任务
+	TaskList(ctx context.Context, in *TaskListReq, opts ...grpc.CallOption) (*TaskListRes, error)
+	TaskDetail(ctx context.Context, in *TaskDetailReq, opts ...grpc.CallOption) (*TaskData, error)
+	TaskSave(ctx context.Context, in *TaskSaveReq, opts ...grpc.CallOption) (*CommonRes, error)
+	TaskChangeStatus(ctx context.Context, in *TaskChangeStatusReq, opts ...grpc.CallOption) (*CommonRes, error)
+	TaskRun(ctx context.Context, in *TaskRunReq, opts ...grpc.CallOption) (*CommonRes, error)
+	TaskDelete(ctx context.Context, in *TaskDeleteReq, opts ...grpc.CallOption) (*CommonRes, error)
 }
 
 type sysServiceClient struct {
@@ -869,6 +887,132 @@ func (c *sysServiceClient) ConfigDelete(ctx context.Context, in *ConfigDeleteReq
 	return out, nil
 }
 
+func (c *sysServiceClient) TaskLogList(ctx context.Context, in *TaskLogListReq, opts ...grpc.CallOption) (*TaskLogListRes, error) {
+	out := new(TaskLogListRes)
+	err := c.cc.Invoke(ctx, "/api.sys.v1.SysService/TaskLogList", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *sysServiceClient) TaskLogClear(ctx context.Context, in *common.NullReq, opts ...grpc.CallOption) (*common.NullRes, error) {
+	out := new(common.NullRes)
+	err := c.cc.Invoke(ctx, "/api.sys.v1.SysService/TaskLogClear", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *sysServiceClient) TaskLogStop(ctx context.Context, in *TaskLogStopReq, opts ...grpc.CallOption) (*common.NullRes, error) {
+	out := new(common.NullRes)
+	err := c.cc.Invoke(ctx, "/api.sys.v1.SysService/TaskLogStop", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *sysServiceClient) HostList(ctx context.Context, in *HostListReq, opts ...grpc.CallOption) (*HostListRes, error) {
+	out := new(HostListRes)
+	err := c.cc.Invoke(ctx, "/api.sys.v1.SysService/HostList", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *sysServiceClient) HostDetail(ctx context.Context, in *HostDetailReq, opts ...grpc.CallOption) (*HostData, error) {
+	out := new(HostData)
+	err := c.cc.Invoke(ctx, "/api.sys.v1.SysService/HostDetail", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *sysServiceClient) HostSave(ctx context.Context, in *HostSaveReq, opts ...grpc.CallOption) (*CommonRes, error) {
+	out := new(CommonRes)
+	err := c.cc.Invoke(ctx, "/api.sys.v1.SysService/HostSave", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *sysServiceClient) HostDelete(ctx context.Context, in *HostDeleteReq, opts ...grpc.CallOption) (*CommonRes, error) {
+	out := new(CommonRes)
+	err := c.cc.Invoke(ctx, "/api.sys.v1.SysService/HostDelete", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *sysServiceClient) HostPing(ctx context.Context, in *HostPingReq, opts ...grpc.CallOption) (*CommonRes, error) {
+	out := new(CommonRes)
+	err := c.cc.Invoke(ctx, "/api.sys.v1.SysService/HostPing", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *sysServiceClient) TaskList(ctx context.Context, in *TaskListReq, opts ...grpc.CallOption) (*TaskListRes, error) {
+	out := new(TaskListRes)
+	err := c.cc.Invoke(ctx, "/api.sys.v1.SysService/TaskList", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *sysServiceClient) TaskDetail(ctx context.Context, in *TaskDetailReq, opts ...grpc.CallOption) (*TaskData, error) {
+	out := new(TaskData)
+	err := c.cc.Invoke(ctx, "/api.sys.v1.SysService/TaskDetail", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *sysServiceClient) TaskSave(ctx context.Context, in *TaskSaveReq, opts ...grpc.CallOption) (*CommonRes, error) {
+	out := new(CommonRes)
+	err := c.cc.Invoke(ctx, "/api.sys.v1.SysService/TaskSave", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *sysServiceClient) TaskChangeStatus(ctx context.Context, in *TaskChangeStatusReq, opts ...grpc.CallOption) (*CommonRes, error) {
+	out := new(CommonRes)
+	err := c.cc.Invoke(ctx, "/api.sys.v1.SysService/TaskChangeStatus", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *sysServiceClient) TaskRun(ctx context.Context, in *TaskRunReq, opts ...grpc.CallOption) (*CommonRes, error) {
+	out := new(CommonRes)
+	err := c.cc.Invoke(ctx, "/api.sys.v1.SysService/TaskRun", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *sysServiceClient) TaskDelete(ctx context.Context, in *TaskDeleteReq, opts ...grpc.CallOption) (*CommonRes, error) {
+	out := new(CommonRes)
+	err := c.cc.Invoke(ctx, "/api.sys.v1.SysService/TaskDelete", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // SysServiceServer is the server API for SysService service.
 // All implementations must embed UnimplementedSysServiceServer
 // for forward compatibility
@@ -1020,6 +1164,24 @@ type SysServiceServer interface {
 	ConfigCreate(context.Context, *ConfigCreateUpdateReq) (*common.NullRes, error)
 	ConfigUpdate(context.Context, *ConfigCreateUpdateReq) (*common.NullRes, error)
 	ConfigDelete(context.Context, *ConfigDeleteReq) (*common.NullRes, error)
+	//任务日志
+	TaskLogList(context.Context, *TaskLogListReq) (*TaskLogListRes, error)
+	TaskLogClear(context.Context, *common.NullReq) (*common.NullRes, error)
+	TaskLogStop(context.Context, *TaskLogStopReq) (*common.NullRes, error)
+	//任务节点
+	HostList(context.Context, *HostListReq) (*HostListRes, error)
+	HostDetail(context.Context, *HostDetailReq) (*HostData, error)
+	//保存与更新
+	HostSave(context.Context, *HostSaveReq) (*CommonRes, error)
+	HostDelete(context.Context, *HostDeleteReq) (*CommonRes, error)
+	HostPing(context.Context, *HostPingReq) (*CommonRes, error)
+	//任务
+	TaskList(context.Context, *TaskListReq) (*TaskListRes, error)
+	TaskDetail(context.Context, *TaskDetailReq) (*TaskData, error)
+	TaskSave(context.Context, *TaskSaveReq) (*CommonRes, error)
+	TaskChangeStatus(context.Context, *TaskChangeStatusReq) (*CommonRes, error)
+	TaskRun(context.Context, *TaskRunReq) (*CommonRes, error)
+	TaskDelete(context.Context, *TaskDeleteReq) (*CommonRes, error)
 	mustEmbedUnimplementedSysServiceServer()
 }
 
@@ -1257,6 +1419,48 @@ func (UnimplementedSysServiceServer) ConfigUpdate(context.Context, *ConfigCreate
 }
 func (UnimplementedSysServiceServer) ConfigDelete(context.Context, *ConfigDeleteReq) (*common.NullRes, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ConfigDelete not implemented")
+}
+func (UnimplementedSysServiceServer) TaskLogList(context.Context, *TaskLogListReq) (*TaskLogListRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method TaskLogList not implemented")
+}
+func (UnimplementedSysServiceServer) TaskLogClear(context.Context, *common.NullReq) (*common.NullRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method TaskLogClear not implemented")
+}
+func (UnimplementedSysServiceServer) TaskLogStop(context.Context, *TaskLogStopReq) (*common.NullRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method TaskLogStop not implemented")
+}
+func (UnimplementedSysServiceServer) HostList(context.Context, *HostListReq) (*HostListRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method HostList not implemented")
+}
+func (UnimplementedSysServiceServer) HostDetail(context.Context, *HostDetailReq) (*HostData, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method HostDetail not implemented")
+}
+func (UnimplementedSysServiceServer) HostSave(context.Context, *HostSaveReq) (*CommonRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method HostSave not implemented")
+}
+func (UnimplementedSysServiceServer) HostDelete(context.Context, *HostDeleteReq) (*CommonRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method HostDelete not implemented")
+}
+func (UnimplementedSysServiceServer) HostPing(context.Context, *HostPingReq) (*CommonRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method HostPing not implemented")
+}
+func (UnimplementedSysServiceServer) TaskList(context.Context, *TaskListReq) (*TaskListRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method TaskList not implemented")
+}
+func (UnimplementedSysServiceServer) TaskDetail(context.Context, *TaskDetailReq) (*TaskData, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method TaskDetail not implemented")
+}
+func (UnimplementedSysServiceServer) TaskSave(context.Context, *TaskSaveReq) (*CommonRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method TaskSave not implemented")
+}
+func (UnimplementedSysServiceServer) TaskChangeStatus(context.Context, *TaskChangeStatusReq) (*CommonRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method TaskChangeStatus not implemented")
+}
+func (UnimplementedSysServiceServer) TaskRun(context.Context, *TaskRunReq) (*CommonRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method TaskRun not implemented")
+}
+func (UnimplementedSysServiceServer) TaskDelete(context.Context, *TaskDeleteReq) (*CommonRes, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method TaskDelete not implemented")
 }
 func (UnimplementedSysServiceServer) mustEmbedUnimplementedSysServiceServer() {}
 
@@ -2657,6 +2861,258 @@ func _SysService_ConfigDelete_Handler(srv interface{}, ctx context.Context, dec 
 	return interceptor(ctx, in, info, handler)
 }
 
+func _SysService_TaskLogList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(TaskLogListReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SysServiceServer).TaskLogList(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/api.sys.v1.SysService/TaskLogList",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SysServiceServer).TaskLogList(ctx, req.(*TaskLogListReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _SysService_TaskLogClear_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(common.NullReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SysServiceServer).TaskLogClear(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/api.sys.v1.SysService/TaskLogClear",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SysServiceServer).TaskLogClear(ctx, req.(*common.NullReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _SysService_TaskLogStop_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(TaskLogStopReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SysServiceServer).TaskLogStop(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/api.sys.v1.SysService/TaskLogStop",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SysServiceServer).TaskLogStop(ctx, req.(*TaskLogStopReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _SysService_HostList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(HostListReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SysServiceServer).HostList(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/api.sys.v1.SysService/HostList",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SysServiceServer).HostList(ctx, req.(*HostListReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _SysService_HostDetail_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(HostDetailReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SysServiceServer).HostDetail(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/api.sys.v1.SysService/HostDetail",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SysServiceServer).HostDetail(ctx, req.(*HostDetailReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _SysService_HostSave_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(HostSaveReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SysServiceServer).HostSave(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/api.sys.v1.SysService/HostSave",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SysServiceServer).HostSave(ctx, req.(*HostSaveReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _SysService_HostDelete_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(HostDeleteReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SysServiceServer).HostDelete(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/api.sys.v1.SysService/HostDelete",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SysServiceServer).HostDelete(ctx, req.(*HostDeleteReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _SysService_HostPing_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(HostPingReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SysServiceServer).HostPing(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/api.sys.v1.SysService/HostPing",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SysServiceServer).HostPing(ctx, req.(*HostPingReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _SysService_TaskList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(TaskListReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SysServiceServer).TaskList(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/api.sys.v1.SysService/TaskList",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SysServiceServer).TaskList(ctx, req.(*TaskListReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _SysService_TaskDetail_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(TaskDetailReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SysServiceServer).TaskDetail(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/api.sys.v1.SysService/TaskDetail",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SysServiceServer).TaskDetail(ctx, req.(*TaskDetailReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _SysService_TaskSave_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(TaskSaveReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SysServiceServer).TaskSave(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/api.sys.v1.SysService/TaskSave",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SysServiceServer).TaskSave(ctx, req.(*TaskSaveReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _SysService_TaskChangeStatus_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(TaskChangeStatusReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SysServiceServer).TaskChangeStatus(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/api.sys.v1.SysService/TaskChangeStatus",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SysServiceServer).TaskChangeStatus(ctx, req.(*TaskChangeStatusReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _SysService_TaskRun_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(TaskRunReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SysServiceServer).TaskRun(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/api.sys.v1.SysService/TaskRun",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SysServiceServer).TaskRun(ctx, req.(*TaskRunReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _SysService_TaskDelete_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(TaskDeleteReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SysServiceServer).TaskDelete(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/api.sys.v1.SysService/TaskDelete",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SysServiceServer).TaskDelete(ctx, req.(*TaskDeleteReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // SysService_ServiceDesc is the grpc.ServiceDesc for SysService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -2971,6 +3427,62 @@ var SysService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ConfigDelete",
 			Handler:    _SysService_ConfigDelete_Handler,
+		},
+		{
+			MethodName: "TaskLogList",
+			Handler:    _SysService_TaskLogList_Handler,
+		},
+		{
+			MethodName: "TaskLogClear",
+			Handler:    _SysService_TaskLogClear_Handler,
+		},
+		{
+			MethodName: "TaskLogStop",
+			Handler:    _SysService_TaskLogStop_Handler,
+		},
+		{
+			MethodName: "HostList",
+			Handler:    _SysService_HostList_Handler,
+		},
+		{
+			MethodName: "HostDetail",
+			Handler:    _SysService_HostDetail_Handler,
+		},
+		{
+			MethodName: "HostSave",
+			Handler:    _SysService_HostSave_Handler,
+		},
+		{
+			MethodName: "HostDelete",
+			Handler:    _SysService_HostDelete_Handler,
+		},
+		{
+			MethodName: "HostPing",
+			Handler:    _SysService_HostPing_Handler,
+		},
+		{
+			MethodName: "TaskList",
+			Handler:    _SysService_TaskList_Handler,
+		},
+		{
+			MethodName: "TaskDetail",
+			Handler:    _SysService_TaskDetail_Handler,
+		},
+		{
+			MethodName: "TaskSave",
+			Handler:    _SysService_TaskSave_Handler,
+		},
+		{
+			MethodName: "TaskChangeStatus",
+			Handler:    _SysService_TaskChangeStatus_Handler,
+		},
+		{
+			MethodName: "TaskRun",
+			Handler:    _SysService_TaskRun_Handler,
+		},
+		{
+			MethodName: "TaskDelete",
+			Handler:    _SysService_TaskDelete_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

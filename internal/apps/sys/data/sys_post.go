@@ -4,7 +4,7 @@ import (
 	"context"
 	v1 "drpshop/api/sys/v1"
 	"drpshop/internal/apps/sys/biz"
-	"drpshop/internal/apps/sys/data/model"
+	"drpshop/internal/apps/sys/model"
 	"fmt"
 	"github.com/go-kratos/kratos/v2/log"
 	"strings"

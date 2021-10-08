@@ -3,8 +3,8 @@ package biz
 import (
 	"context"
 	v1 "drpshop/api/sys/v1"
-	"drpshop/internal/apps/sys/data/model"
 	"drpshop/internal/apps/sys/global"
+	"drpshop/internal/apps/sys/model"
 	"github.com/go-kratos/kratos/v2/log"
 	"github.com/gogf/gf/util/gconv"
 )
@@ -52,7 +52,7 @@ func (uc *SysDeptUsecase) CreateDept(ctx context.Context, in *model.SysDept) err
 
 //修改
 func (uc *SysDeptUsecase) UpdateDept(ctx context.Context, id int64, in *model.SysDept) error {
-	return uc.repo.UpdateDept(ctx,id, in)
+	return uc.repo.UpdateDept(ctx, id, in)
 }
 
 //获取

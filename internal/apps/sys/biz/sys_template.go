@@ -1,7 +1,7 @@
 package biz
 
 import (
-	"drpshop/internal/apps/sys/data/model"
+	"drpshop/internal/apps/sys/model"
 	"github.com/go-kratos/kratos/v2/log"
 )
 

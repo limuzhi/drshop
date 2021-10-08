@@ -169,6 +169,26 @@ service SysService {
     rpc ConfigUpdate(ConfigCreateUpdateReq) returns(common.NullRes);
     rpc ConfigDelete(ConfigDeleteReq) returns(common.NullRes);
 
+    //任务日志
+    rpc TaskLogList(TaskLogListReq) returns(TaskLogListRes);
+    rpc TaskLogClear(common.NullReq) returns(common.NullRes);
+    rpc TaskLogStop(TaskLogStopReq) returns(common.NullRes);
+
+    //任务节点
+    rpc HostList(HostListReq) returns(HostListRes);
+    rpc HostDetail(HostDetailReq) returns(HostData);
+    //保存与更新
+    rpc HostSave(HostSaveReq) returns(CommonRes);
+    rpc HostDelete(HostDeleteReq) returns(CommonRes);
+    rpc HostPing(HostPingReq) returns(CommonRes);
+
+    //任务
+    rpc TaskList(TaskListReq) returns(TaskListRes);
+    rpc TaskDetail(TaskDetailReq) returns(TaskData);
+    rpc TaskSave(TaskSaveReq) returns(CommonRes);
+    rpc TaskChangeStatus(TaskChangeStatusReq) returns(CommonRes);
+    rpc TaskRun(TaskRunReq) returns(CommonRes);
+    rpc TaskDelete(TaskDeleteReq) returns(CommonRes);
 }
 
 
@@ -1267,3 +1287,161 @@ message ConfigDeleteReq {
     repeated int64 configIds = 1;
 }
 //配置 end ---
+
+//---------任务----task---
+
+message TaskLogListReq {
+    int64 taskId = 1;
+    int32 protocol = 2;
+    string status = 3;
+    common.PageReq pageInfo = 4;
+}
+
+message TaskLogData {
+    int64 id = 1;
+    int64 taskId = 2;
+    string name = 3;
+    string spec = 4;
+    int32 protocol = 5;
+    string command = 6;
+    int64 timeout = 7;
+    int32 retryTimes = 8;
+    string hostname = 9;
+    string startTime = 10;
+    string endTime = 11;
+    int32 status = 12;
+    string result = 13;
+    int32 totalTime = 14;
+}
+
+message TaskLogListRes {
+    int64 total = 1;
+    repeated TaskLogData list = 2;
+}
+
+message TaskLogStopReq {
+    int64 id = 1;
+    int64 taskId = 2;
+}
+
+message HostListReq {
+    int64 id = 1;
+    string name = 2;
+    common.PageReq pageInfo = 3;
+}
+
+message HostDetailReq {
+    int64 id = 1;
+}
+
+message HostData {
+    int64 id = 1;
+    string name = 2;
+    string alias = 3;
+    int32 port = 4;
+    string remark = 5;
+}
+
+message HostListRes {
+    int64 total = 1;
+    repeated HostData list = 2;
+}
+
+message HostSaveReq {
+    int64 id = 1;
+    string name = 2;
+    string alias = 3;
+    int32 port = 4;
+    string remark = 5;
+}
+
+message HostDeleteReq {
+    repeated int64 ids = 1;
+}
+
+message HostPingReq {
+    int64 id = 1;
+}
+
+message  TaskListReq {
+    int64 id = 1;
+    int64 hostId = 2;
+    string name = 3;
+    int32 protocol = 4;
+    string tag = 5;
+    common.PageReq pageInfo = 6;
+}
+
+message TaskData {
+    int64 id = 1;
+    string name = 2;
+    string dependencyTaskId = 3;
+    int32 dependencyStatus = 4;
+    string spec = 5;
+    int32 protocol = 6;
+    string command = 7;
+    int32 httpMethod = 8;
+    int32 timeout = 9;
+    int32 multi = 10;
+    int32 retryTimes = 11;
+    int32 retryInterval = 12;
+    int32 notifyStatus = 13;
+    int32 notifyType = 14;
+    string notifyReceiverId = 15;
+    string notifyKeyword = 16;
+    string tag = 17;
+    string remark = 18;
+    int32 status = 19;
+    string nextRunTime = 20;
+    string createdAt = 21;
+    string updatedAt = 22;
+    repeated HostData hosts = 23;
+}
+
+message TaskListRes {
+    int64 total = 1;
+    repeated TaskData list = 2;
+}
+
+message TaskDetailReq {
+    int64 id = 1;
+}
+
+message  TaskSaveReq {
+    int64 id = 1;
+    string name = 2;
+    string dependencyTaskId = 3;
+    int32 dependencyStatus = 4;
+    string spec = 5;
+    int32 protocol = 6;
+    string command = 7;
+    int32 httpMethod = 8;
+    int32 timeout = 9;
+    int32 multi = 10;
+    int32 retryTimes = 11;
+    int32 retryInterval = 12;
+    int32 notifyStatus = 13;
+    int32 notifyType = 14;
+    string notifyReceiverId = 15;
+    string notifyKeyword = 16;
+    string tag = 17;
+    string remark = 18;
+    int32 status = 19;
+    string nextRunTime = 20;
+    int64 createBy = 21;
+    int64 updateBy = 22;
+    repeated HostData hosts = 23;
+}
+
+message TaskChangeStatusReq {
+   int64 id = 1;
+   string status = 2;
+}
+
+message TaskRunReq {
+    int64 id = 1;
+}
+
+message TaskDeleteReq {
+   repeated int64 ids = 1;
+}

@@ -1,14 +1,14 @@
 syntax = "proto3";
 
-package api.tasknode.v1;
-option go_package = "drpshop/api/tasknode/v1;v1";
+package api.task.v1;
+option go_package = "drpshop/api/task/v1;v1";
 option java_multiple_files = true;
-option java_package = "api.tasknode.v1";
+option java_package = "api.task.v1";
 
-service Task {
-    rpc Run(TaskReq) returns (TaskRes);
+// Task服务
+service TaskService {
+	rpc Run(TaskReq) returns (TaskRes);
 }
-
 message TaskReq {
     string command = 2; // 命令
     int32 timeout = 3;  // 任务执行超时时间

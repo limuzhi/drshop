@@ -3,8 +3,8 @@ package service
 import (
 	"context"
 	v1 "drpshop/api/sys/v1"
-	"drpshop/internal/apps/sys/data/model"
 	"drpshop/internal/apps/sys/global"
+	"drpshop/internal/apps/sys/model"
 	"errors"
 	"fmt"
 	"github.com/thoas/go-funk"

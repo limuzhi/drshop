@@ -3,7 +3,7 @@ package biz
 import (
 	"context"
 	v1 "drpshop/api/sys/v1"
-	"drpshop/internal/apps/sys/data/model"
+	"drpshop/internal/apps/sys/model"
 	"drpshop/pkg/token"
 	"errors"
 	"time"
@@ -156,7 +156,7 @@ func (uc *SysUserUsecase) Login(ctx context.Context, account, password string) (
 		claims.ExpiresAt = expireTime
 		outToken, err = uc.repo.CreateToken(claims)
 		return outToken, expireTime, err
-	}else{
+	} else {
 		return "", 0, errors.New("密码错误")
 	}
 }

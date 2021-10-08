@@ -3,8 +3,8 @@ package biz
 import (
 	"context"
 	v1 "drpshop/api/sys/v1"
-	"drpshop/internal/apps/sys/data/model"
 	"drpshop/internal/apps/sys/global"
+	"drpshop/internal/apps/sys/model"
 	"github.com/go-kratos/kratos/v2/log"
 	"github.com/thoas/go-funk"
 	"sort"
@@ -184,5 +184,3 @@ func (uc *SysMenuUsecase) DtoOut(data *model.SysMenu) *v1.MenuListData {
 	}
 	return out
 }
-
-
